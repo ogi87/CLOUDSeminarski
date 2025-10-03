@@ -1,0 +1,16 @@
+# Ignore VCS and OS junk
+.git
+.gitignore
+.DS_Store
+Thumbs.db
+
+# Local backups & dumps
+*.sql
+*.tar
+*.tar.gz
+*.zip
+backups/
+
+# Node/yarn caches if you ever build assets
+node_modules
+.yarn

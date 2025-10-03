@@ -1,0 +1,21 @@
+2023-12-23T10:03:33+00:00 NOTICE profile :: user_update_subscribe_status :: Array
+(
+    [subscribed] => 
+    [user_id] => 1
+    [gdpr_fields] => 
+)
+
+2023-12-23T10:11:58+00:00 NOTICE profile :: user_update_subscribe_status :: Array
+(
+    [subscribed] => 
+    [user_id] => 2
+    [gdpr_fields] => 
+)
+
+2023-12-23T10:27:17+00:00 NOTICE profile :: user_update_subscribe_status :: Array
+(
+    [subscribed] => 
+    [user_id] => 2
+    [gdpr_fields] => 
+)
+

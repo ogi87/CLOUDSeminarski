@@ -1,0 +1,67 @@
+name: epos-wp
+
+services:
+  db:
+    image: mariadb:11.4
+    container_name: db
+    command: ["--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
+    environment:
+      MARIADB_DATABASE: ${WP_DB_NAME}
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/db/init:/docker-entrypoint-initdb.d:ro
+    networks: [fon-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "127.0.0.1", "-uroot"]
+      interval: 30s
+      timeout: 5s
+      retries: 15
+
+  wp:
+    image: wordpress:php8.2-apache
+    container_name: wp
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ""
+    volumes:
+      - ./site/wp-content:/var/www/html/wp-content
+    ports:
+      - "8080:80"
+    networks: [fon-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/wp-login.php"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    extra_hosts:
+      - "myalias.local:127.0.0.1"
+
+  pma:
+    image: phpmyadmin/phpmyadmin:5.2
+    container_name: pma
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ""
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+    networks: [fon-net]
+    restart: unless-stopped
+
+networks:
+  fon-net:
+
+volumes:
+  db-data:
