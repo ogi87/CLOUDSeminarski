@@ -4,16 +4,6 @@
 
 ---
 
-## 👥 Tim i autori
-
-| Ime i prezime | Broj indeksa |
-| :--- | :--- |
-| **Ognjen Tomić** | 2023/0367 |
-| **Aleksa Ranđelović** | 2023/0192 |
-| **Miljan Mijatović** | 2023/0546 |
-
----
-
 ## 📖 Opis projekta
 
 Ovaj repozitorijum sadrži kompletno rešenje za višekontejnersku (multi-container) dockerizaciju postojećeg WordPress veb sajta i e-trgovine. Sistem se sastoji od tri međusobno povezana servisa koji komuniciraju preko izolovane Docker mreže:
